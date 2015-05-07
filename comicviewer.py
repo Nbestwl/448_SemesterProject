@@ -12,7 +12,7 @@ class Toolbar(QtGui.QWidget):
         self.setFixedSize(600,40)
         self.setWindowTitle('ComicViewer Controls')
 
-        self.btnReload = QtGui.QPushButton('Reload',self)
+        self.btnReload = QtGui.QPushButton('Select Comic',self)
         self.btnReload.move(5,10)
 
         self.btnPrevious = QtGui.QPushButton('Previous',self)
@@ -29,6 +29,7 @@ class Toolbar(QtGui.QWidget):
 
         self.btnExit = QtGui.QPushButton('Exit',self)
         self.btnExit.move(505,10)
+        self.btnExit.clicked.connect(QtCore.QCoreApplication.instance().quit)
 
         self.show()
 
@@ -44,28 +45,42 @@ class ComicViewer(QtGui.QWidget):
     def initUI(self):
         self.resize(self.width,self.height)
         self.setWindowTitle('ComicViewer: Untitled')
-        self.show()
 
-        self.labelImage = QtGui.QLabel('Image',self)
-        self.labelImage.resize(self.width,self.height)
-        self.labelImage.move(0,0)
-        self.labelImage.show()
+        self.labelLeftPage = QtGui.QLabel('Left Page',self)
+        self.labelLeftPage.resize(self.width*0.25,self.height*0.5)
+        self.labelLeftPage.move(0,0)
+
+        self.labelRightPage = QtGui.QLabel('Right Page',self)
+        self.labelRightPage.resize(self.width*0.25,self.height*0.5)
+        self.labelRightPage.move(3*self.width,0)
+
+        self.show()
 
         self.toolbar = Toolbar()
 
-    def setPixmap(self,image):
-        pixmap = QtGui.QPixmap('duck.jpg')
-        pixmap.scaledToWidth(self.width)
-        pixmap.scaledToHeight(self.height)
-        self.labelImage.setPixmap(pixmap)
-        sizeHint = self.labelImage.sizeHint()
-        self.labelImage.resize(sizeHint)
-        self.resize(sizeHint)
+    def setPixmap(self,leftImage,rightImage):
+        # DEBUG
+        self.leftPixmap = QtGui.QPixmap('an12/an12(1000)fc.jpg')
+        self.leftPixmap = self.leftPixmap.scaled(200, QtCore.Qt.KeepAspectRatio)
+        # DEBUG
+        self.rightPixmap = QtGui.QPixmap('an12/an12(1001).jpg')
+        self.rightPixmap = self.rightPixmap.scaled(200, QtCore.Qt.KeepAspectRatio)
+        self.rightPixmap.scaledToWidth(self.width*0.5)
+        self.rightPixmap.scaledToHeight(self.height*0.5)
+
+        self.labelLeftPage.setPixmap(self.leftPixmap)
+        self.labelRightPage.setPixmap(self.rightPixmap)
+        leftSizeHint = self.labelLeftPage.sizeHint()
+        rightSizeHint = self.labelRightPage.sizeHint()
+        self.labelLeftPage.resize(leftSizeHint)
+        self.labelRightPage.resize(rightSizeHint)
+        self.resize(leftSizeHint + rightSizeHint)
+
 
 def main():
     app = QtGui.QApplication(sys.argv)
     comicViewer = ComicViewer()
-    comicViewer.setPixmap('duck.jpg')
+    comicViewer.setPixmap('duck.jpg','stuff.jpg')
 
     sys.exit(app.exec_())
 
