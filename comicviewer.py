@@ -42,13 +42,17 @@ class Toolbar(QtGui.QWidget):
 
         self.show()
 
+    def showDialog(self):
+        directory = QtGui.QFileDialog.getExistingDirectory(self, 'Select Comic Folder')
+        return directory
+
 class ComicViewer(QtGui.QWidget):
 
     def __init__(self):
         super(ComicViewer,self).__init__()
         print('ComicViewer is now initialized')
         self.model = ImageDatabase()
-        self.controller = Controller()        
+        self.controller = Controller(self.model,self)        
         self.width = 6*175
         self.height = 4*175
         self.initUI()
@@ -77,15 +81,9 @@ class ComicViewer(QtGui.QWidget):
         # DEBUG
         self.rightPixmap = QtGui.QPixmap('an12/an12(1001).jpg')
         self.rightPixmap = self.rightPixmap.scaled(self.labelRightPage.size(), QtCore.Qt.KeepAspectRatio)
-        #self.rightPixmap.scaledToWidth(self.width*0.5)
-        #self.rightPixmap.scaledToHeight(self.height*0.5)
 
         self.labelLeftPage.setPixmap(self.leftPixmap)
         self.labelRightPage.setPixmap(self.rightPixmap)
-        #leftSizeHint = self.labelLeftPage.sizeHint()
-        #rightSizeHint = self.labelRightPage.sizeHint()
-        #self.labelLeftPage.resize(leftSizeHint)
-        #self.labelRightPage.resize(rightSizeHint)
         self.resize(self.labelLeftPage.width()*2,self.labelRightPage.height())
 
         self.show()
