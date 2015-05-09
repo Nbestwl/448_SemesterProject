@@ -14,9 +14,11 @@ class Controller:
 
     def nextPage(self):
         print('nextPage()')
+        self.model.nextPage()
 
     def prevPage(self):
         print('prevPage()')
+        self.model.prevPage()
 
     def zoomIn(self):
         print('zoomIn()')

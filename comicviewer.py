@@ -51,7 +51,7 @@ class ComicViewer(QtGui.QWidget):
     def __init__(self):
         super(ComicViewer,self).__init__()
         print('ComicViewer is now initialized')
-        self.model = ImageDatabase()
+        self.model = ImageDatabase(self)
         self.controller = Controller(self.model,self)        
         self.width = 6*175
         self.height = 4*175
@@ -74,12 +74,9 @@ class ComicViewer(QtGui.QWidget):
         self.toolbar = Toolbar(self.model,self.controller)
 
     def setPixmap(self,leftImage,rightImage):
-
-        # DEBUG
-        self.leftPixmap = QtGui.QPixmap('an12/an12(1000)fc.jpg')
+        self.leftPixmap = QtGui.QPixmap(leftImage)
         self.leftPixmap = self.leftPixmap.scaled(self.labelLeftPage.size(), QtCore.Qt.KeepAspectRatio)
-        # DEBUG
-        self.rightPixmap = QtGui.QPixmap('an12/an12(1001).jpg')
+        self.rightPixmap = QtGui.QPixmap(rightImage)
         self.rightPixmap = self.rightPixmap.scaled(self.labelRightPage.size(), QtCore.Qt.KeepAspectRatio)
 
         self.labelLeftPage.setPixmap(self.leftPixmap)
@@ -92,7 +89,6 @@ class ComicViewer(QtGui.QWidget):
 def main():
     app = QtGui.QApplication(sys.argv)
     comicViewer = ComicViewer()
-    comicViewer.setPixmap('duck.jpg','stuff.jpg')
 
     sys.exit(app.exec_())
 
