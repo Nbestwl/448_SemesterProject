@@ -61,7 +61,7 @@ class ComicViewer(QtGui.QWidget):
     def initUI(self):
         self.resize(self.width,self.height)
         self.setFixedSize(self.width,self.height)
-        self.setWindowTitle('ComicViewer: Untitled')
+        self.setWindowTitle('ComicViewer')
 
         self.labelLeftPage = QtGui.QLabel('Left Page. Please load a comic.',self)
         self.labelLeftPage.setAlignment(QtCore.Qt.AlignCenter)
