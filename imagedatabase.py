@@ -68,7 +68,7 @@ class ImageDatabase:
 
     # Shrinks image
     def zoomOut(self):
-        if self.magnification - 0.1 > 0:
+        if self.magnification - 0.1 > 0.5:
             self.magnification -= 0.1
             self.view.zoom(self.magnification)
             self.updateView()

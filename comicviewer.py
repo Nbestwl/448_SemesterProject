@@ -60,13 +60,16 @@ class ComicViewer(QtGui.QWidget):
  
     def initUI(self):
         self.resize(self.width,self.height)
+        self.setFixedSize(self.width,self.height)
         self.setWindowTitle('ComicViewer: Untitled')
 
-        self.labelLeftPage = QtGui.QLabel('Left Page',self)
+        self.labelLeftPage = QtGui.QLabel('Left Page. Please load a comic.',self)
+        self.labelLeftPage.setAlignment(QtCore.Qt.AlignCenter)
         self.labelLeftPage.resize(self.width*0.5,self.height)
         self.labelLeftPage.move(0,0)
 
         self.labelRightPage = QtGui.QLabel('Right Page',self)
+        self.labelRightPage.setAlignment(QtCore.Qt.AlignCenter)
         self.labelRightPage.resize(self.labelLeftPage.size())
         self.labelRightPage.move(self.labelLeftPage.width(),0)
 
@@ -83,6 +86,7 @@ class ComicViewer(QtGui.QWidget):
         self.labelLeftPage.setPixmap(self.leftPixmap)
         self.labelRightPage.setPixmap(self.rightPixmap)
         self.resize(self.labelLeftPage.width()*2,self.labelRightPage.height())
+        self.setFixedSize(self.width,self.height)
 
         self.show()
 
@@ -90,6 +94,7 @@ class ComicViewer(QtGui.QWidget):
         self.width = 6.0*self.defaultScale*zoom_factor
         self.height = 4.0*self.defaultScale*zoom_factor
         self.resize(self.width,self.height)
+        self.setFixedSize(self.width,self.height)
         
         self.labelLeftPage.resize(self.width*0.5,self.height)
         self.labelLeftPage.move(0,0)
