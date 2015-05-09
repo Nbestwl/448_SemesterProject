@@ -11,6 +11,7 @@ class ImageDatabase:
         self.Images = []
         self.Directory = None
 
+    # Selects folder for a set of images
     def selectFolder(self, path):
         self.leftPage = 0
         self.rightPage = 1
@@ -29,15 +30,35 @@ class ImageDatabase:
             print(files)
             return files
 
+    # Selects images in an incrementing behavior
     def nextPage(self):
-        self.leftPage += 2
-        self.rightPage = self.leftPage + 1
-        self.updateView()
+        if len(self.Images) > 0:
+            self.leftPage += 1
+            # Left Page incrementing with consideration to boundary
+            if self.leftPage > len(self.Images)-1:
+                self.leftPage = 0
 
+            # Right Page incrementing with consideration to boundary
+            if self.leftPage == len(self.Images)-1:
+                self.rightPage = 0
+            else:
+                self.rightPage = self.leftPage + 1
+            self.updateView()
+
+    # Selects images in a decrementing behavior
     def prevPage(self):
-        self.leftPage -= 2
-        self.rightPage = self.leftPage + 1
-        self.updateView()
+        if len(self.Images) > 0:
+            self.leftPage -= 1
+            # Left Page decrementing with conisderation to boundary
+            if self.leftPage < 0:
+                self.leftPage = len(self.Images)-1
+        
+            if self.leftPage == len(self.Images)-1:
+                self.rightPage = 0
+            else:
+                self.rightPage = self.leftPage + 1
+            self.updateView()
 
+    # Updates the view with new current images
     def updateView(self):
         self.view.setPixmap(self.Images[self.leftPage],self.Images[self.rightPage])
