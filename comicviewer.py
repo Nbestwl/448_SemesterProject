@@ -2,7 +2,7 @@ import sys
 from PyQt4 import QtGui, QtCore
 from imagedatabase import ImageDatabase
 from controller import Controller
-
+# haahhahaahahaahahaha
 class Toolbar(QtGui.QWidget):
 
     def __init__(self,model,controller):
@@ -14,7 +14,7 @@ class Toolbar(QtGui.QWidget):
     def initUI(self):
         self.resize(600,40)
         self.setFixedSize(600,40)
-        self.setWindowTitle('ComicViewer Controls')
+        self.setWindowTitle('ComicViewer Controls') 
 
         self.btnSelect = QtGui.QPushButton('Select Comic',self)
         self.btnSelect.move(5,10)
