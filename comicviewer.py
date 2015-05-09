@@ -52,9 +52,10 @@ class ComicViewer(QtGui.QWidget):
         super(ComicViewer,self).__init__()
         print('ComicViewer is now initialized')
         self.model = ImageDatabase(self)
-        self.controller = Controller(self.model,self)        
-        self.width = 6*175
-        self.height = 4*175
+        self.controller = Controller(self.model,self)
+        self.defaultScale = 175.0        
+        self.width = 6.0*self.defaultScale
+        self.height = 4.0*self.defaultScale
         self.initUI()
  
     def initUI(self):
@@ -85,6 +86,18 @@ class ComicViewer(QtGui.QWidget):
 
         self.show()
 
+    def zoom(self,zoom_factor=1.0):
+        self.width = 6.0*self.defaultScale*zoom_factor
+        self.height = 4.0*self.defaultScale*zoom_factor
+        self.resize(self.width,self.height)
+        
+        self.labelLeftPage.resize(self.width*0.5,self.height)
+        self.labelLeftPage.move(0,0)
+
+        self.labelRightPage.resize(self.labelLeftPage.size())
+        self.labelRightPage.move(self.labelLeftPage.width(),0)
+
+        self.show()
 
 def main():
     app = QtGui.QApplication(sys.argv)

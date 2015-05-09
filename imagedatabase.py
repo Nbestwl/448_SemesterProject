@@ -8,6 +8,7 @@ class ImageDatabase:
         self.view = view
         self.leftPage = 0
         self.rightPage = 1
+        self.magnification = 1.0
         self.Images = []
         self.Directory = None
 
@@ -59,6 +60,24 @@ class ImageDatabase:
                 self.rightPage = self.leftPage + 1
             self.updateView()
 
+    # Enlargens image
+    def zoomIn(self):
+        self.magnification += 0.1
+        self.view.zoom(self.magnification) 
+        self.updateView()
+
+    # Shrinks image
+    def zoomOut(self):
+        if self.magnification - 0.1 > 0:
+            self.magnification -= 0.1
+            self.view.zoom(self.magnification)
+            self.updateView()
+        else:
+            print('Cannot zoom out any further')
+
     # Updates the view with new current images
     def updateView(self):
-        self.view.setPixmap(self.Images[self.leftPage],self.Images[self.rightPage])
+        if len(self.Images) > 0:
+            self.view.setPixmap(self.Images[self.leftPage],self.Images[self.rightPage])
+
+

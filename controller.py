@@ -22,6 +22,8 @@ class Controller:
 
     def zoomIn(self):
         print('zoomIn()')
+        self.model.zoomIn()
 
     def zoomOut(self):
         print('zoomOut()')
+        self.model.zoomOut()
