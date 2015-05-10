@@ -2,7 +2,7 @@ import sys
 from PyQt4 import QtGui, QtCore
 from imagedatabase import ImageDatabase
 from controller import Controller
-# haahhahaahahaahahaha
+
 class Toolbar(QtGui.QWidget):
 
     def __init__(self,model,controller):
@@ -12,9 +12,11 @@ class Toolbar(QtGui.QWidget):
         self.initUI()
 
     def initUI(self):
-        self.resize(600,40)
+        grid = QtGui.QGridLayout()
+        self.setLayout(grid)
+
         self.setFixedSize(600,40)
-        self.setWindowTitle('ComicViewer Controls') 
+        self.setWindowTitle('ComicViewer Controls')
 
         self.btnSelect = QtGui.QPushButton('Select Comic',self)
         self.btnSelect.move(5,10)
@@ -53,13 +55,12 @@ class ComicViewer(QtGui.QWidget):
         print('ComicViewer is now initialized')
         self.model = ImageDatabase(self)
         self.controller = Controller(self.model,self)
-        self.defaultScale = 175.0        
+        self.defaultScale = 200.0        
         self.width = 6.0*self.defaultScale
         self.height = 4.0*self.defaultScale
         self.initUI()
  
     def initUI(self):
-        self.resize(self.width,self.height)
         self.setFixedSize(self.width,self.height)
         self.setWindowTitle('ComicViewer')
 
@@ -72,6 +73,15 @@ class ComicViewer(QtGui.QWidget):
         self.labelRightPage.setAlignment(QtCore.Qt.AlignCenter)
         self.labelRightPage.resize(self.labelLeftPage.size())
         self.labelRightPage.move(self.labelLeftPage.width(),0)
+
+        self.scrollArea1 = QtGui.QScrollArea()
+        self.scrollArea1.setWidget(self.labelRightPage)
+        self.scrollArea2 = QtGui.QScrollArea()
+        self.scrollArea2.setWidget(self.labelLeftPage)
+
+        self.layout = QtGui.QHBoxLayout(self)
+        self.layout.addWidget(self.scrollArea1)
+        self.layout.addWidget(self.scrollArea2)
 
         self.show()
 
@@ -86,15 +96,15 @@ class ComicViewer(QtGui.QWidget):
         self.labelLeftPage.setPixmap(self.leftPixmap)
         self.labelRightPage.setPixmap(self.rightPixmap)
         self.resize(self.labelLeftPage.width()*2,self.labelRightPage.height())
-        self.setFixedSize(self.width,self.height)
+        # self.setFixedSize(self.width,self.height)
 
         self.show()
 
     def zoom(self,zoom_factor=1.0):
         self.width = 6.0*self.defaultScale*zoom_factor
         self.height = 4.0*self.defaultScale*zoom_factor
-        self.resize(self.width,self.height)
-        self.setFixedSize(self.width,self.height)
+        # self.resize(self.width,self.height)
+        # self.setFixedSize(self.width,self.height)
         
         self.labelLeftPage.resize(self.width*0.5,self.height)
         self.labelLeftPage.move(0,0)
